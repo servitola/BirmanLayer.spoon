@@ -63,18 +63,16 @@ spoon.BirmanLayer:start()
 
 ## Настройка
 
+Ничего не обязательно. Две вещи, которые меняют чаще всего, до `start()`:
+
 ```lua
-local layer = spoon.BirmanLayer
-layer.rightOptionOnly = true                     -- false: оба ⌥, как в Mac-раскладке Бирмана
-layer.excludedBundles = { "com.example.game" }   -- приложения, где слой молчит
-layer.overrides = { ["*"] = { keys = { g = { opt = "©" } } } }   -- изменить или добавить любой символ
-layer:start()
+spoon.BirmanLayer.excludedBundles = { "com.example.game" }   -- молчать в этих приложениях
+spoon.BirmanLayer.rightOptionOnly = false                    -- оба ⌥, как в Mac-раскладке Бирмана
 ```
 
-Всё остальное, включая добавление букв в мёртвые клавиши и правки для отдельной раскладки, в
-[docs/configuration.ru.md](docs/configuration.ru.md). Какая клавиша что печатает: [docs/characters.ru.md](docs/characters.ru.md). Почему символы ровно как у Бирмана и
-чем мы отличаемся (только правый ⌥, как на Windows): [docs/how-it-works.ru.md](docs/how-it-works.ru.md).
-История версий: [CHANGELOG.ru.md](CHANGELOG.ru.md).
+Свои символы, мёртвые клавиши и всё остальное: [docs/configuration.ru.md](docs/configuration.ru.md).
+Ещё: [какая клавиша что печатает](docs/characters.ru.md) · [как это работает](docs/how-it-works.ru.md) ·
+[история версий](CHANGELOG.ru.md).
 
 ## Оригинал
 

@@ -2,18 +2,24 @@
 
 # Configuration
 
+## The basics
+
+Nothing is required after `start()`. Two changes are common; set them before `start()`:
+
 ```lua
 hs.loadSpoon("BirmanLayer")
 local layer = spoon.BirmanLayer
 layer.excludedBundles = { "com.example.game" }   -- apps where the layer stays silent
-layer.deadKeyTimeout = 3                         -- seconds
-layer.overrides = {
-    ["*"] = {                                    -- every input source
-        keys = { g = { opt = "©" } },            -- right ⌥ + g
-    },
-}
+layer.rightOptionOnly = false                    -- both ⌥ keys, as in Birman's Mac layout
 layer:start()
 ```
+
+Settings are read by `start()`; call it again after changing one. Methods: `start()`, `stop()`, `state()`
+(`running`, pending dead key).
+
+## Advanced
+
+### All settings
 
 | Variable | Default | Meaning |
 | --- | --- | --- |
@@ -24,10 +30,7 @@ layer:start()
 | `deadKeyTimeout` | `3` | seconds a dead key waits |
 | `logger` | `hs.logger.new("BirmanLayer")` | Spoon logger |
 
-Methods: `start()`, `stop()`, `state()` (`running`, pending dead key). Configuration is read by
-`start()`; call it again after changing a variable.
-
-## Overrides
+### Overrides
 
 `overrides` is keyed by `"*"` (every input source) or by one input source id, as
 `hs.keycodes.currentSourceID()` prints it (`com.apple.keylayout.Greek`). An id's table sits on top
@@ -59,7 +62,7 @@ layer.overrides = {
 - `opt` is right ⌥ (either ⌥ when `rightOptionOnly = false`), `shift_opt` is ⇧ + that key.
 - Key names are QWERTY positions whatever layout is active; an unknown name is an error when you call `start()`. Rows of `fixups` take names too.
 
-## Change what Birman did
+### Change what Birman did
 
 Some of Birman's choices look like slips, or differ between his English and Russian layouts. The Spoon
 keeps them all; each is one `overrides` entry:
@@ -84,7 +87,7 @@ layer.overrides = {
 win over `compose`, and `{ pass = true }` there means "this key does not compose", which is how
 Birman's layout leaves that second ё key out.
 
-## `baseFixups`
+### `baseFixups`
 
 Birman's layout also moves a few plain keys: `` ` `` and `~` on the ISO `§` key, `\` on the ISO key
 beside left ⇧ in ABC, `Ё` on ⇧`` ` `` in Russian – PC. `baseFixups = true` types those, for

@@ -54,33 +54,35 @@ The version is Birman's Mac layout version the data was read from, plus a patch 
 
 ## Speed, and why not Karabiner
 
-The Spoon's own work per keystroke, measured with `tests/bench.lua` (Apple M3 Pro, macOS 26.6, Hammerspoon 1.1.1):
+Measured end to end with `tests/bench_endtoend.lua` (Apple M3 Pro, macOS 26.6, Hammerspoon 1.1.1): 100 presses per line,
+from the trigger to the character arriving in a text field. First number idle, second with 10 busy processes.
 
-| | Time |
-| --- | --- |
-| decide what to do with right ⌥ + `c` | about 1 µs |
-| pass an ordinary key through | about 0.6 µs |
-| build the two Unicode key events that type `—` | about 3 µs |
+| Route | Median | 95th percentile | Bad results (of 100) |
+| --- | --- | --- | --- |
+| a Unicode key event posted directly, no Spoon (the floor: the OS and the app) | 10 / 6 ms | 19 / 15 ms | 3 / 1 |
+| **BirmanLayer**, right ⌥ + `c` | **16 / 12 ms** | 25 / 21 ms | 0 / 0 |
+| Karabiner-style: shell `pbcopy`, 30 ms hold, ⌘V | 44 / 40 ms | 56 / 50 ms | 5 / 8 |
 
-What reaches the application is a real Unicode key event posted from inside Hammerspoon (`setUnicodeString`): no
-child process and no clipboard.
+Karabiner-Elements has no Unicode output (its documented outputs are `key_code`, `consumer_key_code`,
+`pointing_button`, `shell_command`, `select_input_source`, `set_variable`, `mouse_key`, `sticky_modifier`,
+`software_function`, `send_user_command`), so text has to go through `shell_command`. The last line replays that route:
+the same kind of shell command, then a 30 ms wait for the clipboard to fill, then ⌘V. It is not Karabiner itself,
+which reacts only to a physical keyboard and cannot be driven from software, so Karabiner's own dispatch time is not in the
+number.
 
-Karabiner-Elements cannot do that. Its documented outputs are `key_code`, `consumer_key_code`, `pointing_button`,
-`shell_command`, `select_input_source`, `set_variable`, `mouse_key`, `sticky_modifier`, `software_function` and
-`send_user_command`; there is no Unicode output. To type `—` from Karabiner you go through `shell_command`, usually
-`pbcopy` plus a synthetic ⌘V, or an AppleScript `keystroke`. Measured on the same Mac, before the paste even starts:
+What the table says:
 
-| | Time |
-| --- | --- |
-| start a shell (`/bin/sh -c :`) | about 4 ms |
-| shell plus a pasteboard tool (`sh -c pbpaste`, standing in for `pbcopy`) | about 13 ms |
-| `osascript -e 1` | about 32 ms |
+- The Spoon's 16 ms is mostly the OS: a directly posted event already takes 10 ms in this setup. About 6 ms is the Spoon
+  (catching the key through the event tap and posting the Unicode event); its own decision takes about 1 µs.
+- The shell route is about 28 ms slower at the median (44 ms), because it must wait: the shell runs asynchronously, so a fixed
+  pause stands in for "the clipboard is ready". About two screen frames; you can notice it when typing fast.
+- The pause is a guess, and under load it is sometimes too short: in 8 of 100 runs the ⌘V pasted the previous clipboard
+  contents or nothing. That is a wrong or missing character, which you will notice more than the delay.
+- The clipboard is overwritten on every press.
+- "Bad results" also contain harness noise: the floor line, which cannot really fail, shows 3 and 1.
 
-That is three orders of magnitude, but a single 13 ms delay is below what a person notices, so the honest costs of the
-Karabiner route are elsewhere: a shell command runs asynchronously and out of step with the key stream, so a fast typist
-can get the next letters before the character; the clipboard is overwritten, or has to be saved and restored, which adds delay
-and races; ⌘V does nothing where paste is unavailable; and dead keys need state, which Karabiner keeps in variables while the
-output still goes through a shell. Not measured: an end-to-end Karabiner run, which would overwrite the clipboard.
+Inside the Spoon, `tests/bench.lua` gives about 1 µs to decide what to do with right ⌥ + `c`, 0.6 µs to pass an ordinary key
+through, and 3 µs to build the two Unicode key events.
 
 Karabiner and this Spoon coexist well: Karabiner is the right tool for turning one key into another, and Hammerspoon for typing text.
 

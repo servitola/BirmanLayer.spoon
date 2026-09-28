@@ -62,20 +62,18 @@ spoon.BirmanLayer:start()
 
 Give Hammerspoon the **Accessibility** permission (System Settings → Privacy & Security → Accessibility). Right ⌥ + `c` types `©`.
 
-## Make it yours
+## Settings
+
+Nothing is required. Two things people change, before `start()`:
 
 ```lua
-local layer = spoon.BirmanLayer
-layer.rightOptionOnly = true                     -- false: both ⌥ keys, as in Birman's Mac layout
-layer.excludedBundles = { "com.example.game" }   -- apps where it stays silent
-layer.overrides = { ["*"] = { keys = { g = { opt = "©" } } } }   -- change or add any character
-layer:start()
+spoon.BirmanLayer.excludedBundles = { "com.example.game" }   -- stay silent in these apps
+spoon.BirmanLayer.rightOptionOnly = false                    -- both ⌥ keys, as in Birman's Mac layout
 ```
 
-Everything else, including adding letters to dead keys and per-layout changes, is in
-[docs/configuration.md](docs/configuration.md); which key types what: [docs/characters.md](docs/characters.md). How it stays exactly Birman's, and where it differs
-(the right ⌥ only, like Windows): [docs/how-it-works.md](docs/how-it-works.md). What changed:
-[CHANGELOG.md](CHANGELOG.md).
+Your own characters, dead keys and the rest: [docs/configuration.md](docs/configuration.md).
+Also: [which key types what](docs/characters.md) · [how it works](docs/how-it-works.md) ·
+[changelog](CHANGELOG.md).
 
 ## The original
 
