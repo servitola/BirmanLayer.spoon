@@ -49,18 +49,25 @@ Already use Birman's layout? [docs/migrating.md](docs/migrating.md) moves you ov
 
 ## Install
 
+You need [Hammerspoon](https://www.hammerspoon.org) (`brew install --cask hammerspoon`). Then:
+
 ```sh
 git clone https://github.com/servitola/BirmanLayer.spoon ~/.hammerspoon/Spoons/BirmanLayer.spoon
 ```
 
-Then in `~/.hammerspoon/init.lua`:
+and in `~/.hammerspoon/init.lua` (create it if there is none):
 
 ```lua
 hs.loadSpoon("BirmanLayer")
 spoon.BirmanLayer:start()
 ```
 
-Give Hammerspoon the **Accessibility** permission (System Settings → Privacy & Security → Accessibility). Right ⌥ + `c` types `©`.
+Give Hammerspoon the **Accessibility** permission (System Settings → Privacy & Security → Accessibility) and
+turn on *Launch Hammerspoon at login* in its preferences. Right ⌥ + `c` types `©`.
+
+No git? Download the zip from the [release](https://github.com/servitola/BirmanLayer.spoon/releases/latest) and
+double-click `BirmanLayer.spoon`. Update later with `git pull` in that folder. Nothing typed?
+[docs/troubleshooting.md](docs/troubleshooting.md).
 
 ## Settings
 
@@ -78,7 +85,7 @@ Also: [which key types what](docs/characters.md) · [how it works](docs/how-it-w
 ## The original
 
 Ilya Birman's layout is free, and it is his: the arrangement of the characters, the pictures, the name.
-Everything worth loving here is from there: his [layout page](https://ilyabirman.ru/typography-layout/)
+His [layout page](https://ilyabirman.ru/typography-layout/)
 (downloads for Mac and Windows), the [FAQ](https://ilyabirman.ru/typography-layout/faq/) and the
 [poster](https://ilyabirman.ru/typography-layout/poster/) with his own scheme of the keys, and his
 [Telegram channel](https://t.me/ilyabirman_channel). The picture at the top of this page is drawn from the data,

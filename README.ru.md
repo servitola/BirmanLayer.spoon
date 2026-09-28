@@ -48,18 +48,26 @@ Spoon оставляет ABC, русскую, греческую или любу
 
 ## Установка
 
+Нужен [Hammerspoon](https://www.hammerspoon.org) (`brew install --cask hammerspoon`). Затем:
+
 ```sh
 git clone https://github.com/servitola/BirmanLayer.spoon ~/.hammerspoon/Spoons/BirmanLayer.spoon
 ```
 
-Затем в `~/.hammerspoon/init.lua`:
+и в `~/.hammerspoon/init.lua` (создайте, если его нет):
 
 ```lua
 hs.loadSpoon("BirmanLayer")
 spoon.BirmanLayer:start()
 ```
 
-Разрешите Hammerspoon **Универсальный доступ** (Accessibility): Системные настройки → Конфиденциальность и безопасность → Универсальный доступ. Правый ⌥ + `c` печатает `©`.
+Разрешите Hammerspoon **Универсальный доступ** (Accessibility): Системные настройки → Конфиденциальность и
+безопасность → Универсальный доступ. В его настройках включите *Launch Hammerspoon at login*. Правый ⌥ + `c`
+печатает `©`.
+
+Без git: скачайте zip из [релиза](https://github.com/servitola/BirmanLayer.spoon/releases/latest) и дважды щёлкните
+`BirmanLayer.spoon`. Обновление потом: `git pull` в этой папке. Ничего не печатается?
+[docs/troubleshooting.ru.md](docs/troubleshooting.ru.md).
 
 ## Настройка
 
@@ -76,8 +84,8 @@ spoon.BirmanLayer.rightOptionOnly = false                    -- оба ⌥, ка
 
 ## Оригинал
 
-Раскладка Ильи Бирмана бесплатная, и она его: расположение символов, картинки, название. Всё, что здесь
-стоит любить, оттуда: его [страница раскладки](https://ilyabirman.ru/typography-layout/) (скачать для Мака и
+Раскладка Ильи Бирмана бесплатная, и она его: расположение символов, картинки, название. Его
+[страница раскладки](https://ilyabirman.ru/typography-layout/) (скачать для Мака и
 Виндоуса), [вопросы и ответы](https://ilyabirman.ru/typography-layout/faq/) и
 [плакат](https://ilyabirman.ru/typography-layout/poster/) с его собственной схемой клавиш, а ещё его
 [канал в Телеграме](https://t.me/ilyabirman_channel). Картинка вверху нарисована по данным, а не скопирована у него.
