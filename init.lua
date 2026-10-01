@@ -11,7 +11,7 @@ local obj = {}
 obj.__index = obj
 
 obj.name = "BirmanLayer"
-obj.version = "3.9.0"
+obj.version = "3.9.1"
 obj.author = "servitola"
 obj.homepage = "https://github.com/servitola/BirmanLayer.spoon"
 obj.license = "MIT - https://opensource.org/licenses/MIT"
@@ -46,6 +46,13 @@ obj.rightOptionOnly = true
 --- Read by `BirmanLayer:start()`.
 obj.excludedBundles = {}
 
+--- BirmanLayer.excludedLayouts
+--- Variable
+--- List of input source IDs, as `hs.keycodes.currentSourceID()` reports them, in which the layer stays out
+--- and the Option keys keep that layout's own ⌥ layer, e.g. `{ "com.apple.keylayout.Greek" }` for Apple's
+--- Greek tonos letters and symbols. Defaults to `{}`. Read by `BirmanLayer:start()`.
+obj.excludedLayouts = {}
+
 --- BirmanLayer.deadKeyTimeout
 --- Variable
 --- Seconds a dead key waits for the next key before it is dropped silently. Defaults to `3`.
@@ -69,7 +76,7 @@ local props = hs.eventtap.event.properties
 
 local tap, watcher, dead, excluded
 local overrides, latinTable, cyrillicTable, perSource, fixupCodes = {}, nil, nil, {}, {}
-local excludedSet, deadTimeout, fixupsOn, rightOnly = {}, 3e9, false, true
+local excludedSet, excludedSources, deadTimeout, fixupsOn, rightOnly = {}, {}, 3e9, false, true
 
 local function layerKey(flags)
     if rightOnly then return flags & RIGHT_ALT ~= 0 and flags & LEFT_ALT == 0 end
@@ -201,7 +208,9 @@ end
 
 local function layer(flags, code, shift, repeating)
     if not layerKey(flags) or flags & BLOCKERS ~= 0 then return false end
-    local row = tableFor(obj._currentSource()).keys[code]
+    local source = obj._currentSource()
+    if excludedSources[source or ""] then return false end
+    local row = tableFor(source).keys[code]
     local out = row and row[shift and "shift_opt" or "opt"]
     if out == nil or (type(out) == "table" and out.pass) then return false end
     -- A held dead key must not re-enter its state on every repeat.
@@ -212,6 +221,7 @@ end
 local function fixup(flags, code, shift)
     if not (fixupsOn and fixupCodes[code]) or flags & (RIGHT_ALT | LEFT_ALT | BLOCKERS) ~= 0 then return false end
     local source = obj._currentSource()
+    if excludedSources[source or ""] then return false end
     local rows = tableFor(source).fixups[source]
     local out = rows and rows[code] and rows[code][shift and "shift" or "base"]
     if out == nil then return false end
@@ -220,9 +230,11 @@ local function fixup(flags, code, shift)
 end
 
 local function insideDead(event, flags, code, shift)
-    local t = tableFor(obj._currentSource())
+    local source = obj._currentSource()
+    local t = tableFor(source)
     local body, state = t.dead[dead.state], dead.state
     clear()
+    if excludedSources[source or ""] then return false end
     if flags & BLOCKERS ~= 0 then return false end
     if code == ESCAPE then return true end
     local out
@@ -313,7 +325,7 @@ end
 ---  * The BirmanLayer object
 ---
 --- Notes:
----  * Reads `overrides`, `rightOptionOnly`, `baseFixups`, `excludedBundles` and `deadKeyTimeout`; a key name in
+---  * Reads `overrides`, `rightOptionOnly`, `baseFixups`, `excludedBundles`, `excludedLayouts` and `deadKeyTimeout`; a key name in
 ---    `overrides` that is not a QWERTY key position raises an error here
 ---  * Hammerspoon needs the Accessibility permission, and nothing is typed while macOS secure
 ---    input is on (password fields, some terminals)
@@ -332,6 +344,8 @@ function obj:start()
     for _, override in pairs(overrides) do collectFixupCodes(override) end
     excludedSet = {}
     for _, id in ipairs(self.excludedBundles) do excludedSet[id] = true end
+    excludedSources = {}
+    for _, id in ipairs(self.excludedLayouts) do excludedSources[id] = true end
     deadTimeout = self.deadKeyTimeout * 1e9
     obj._appActivated(obj._frontBundle())
     local types = hs.eventtap.event.types

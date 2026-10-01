@@ -51,10 +51,10 @@
       {
         "def": "BirmanLayer:start()",
         "desc": "Starts the key tap and the application watcher; calling it again restarts the layer with the current settings",
-        "doc": "Starts the key tap and the application watcher; calling it again restarts the layer with the current settings\n\nParameters:\n * None\n\nReturns:\n * The BirmanLayer object\n\nNotes:\n * Reads `overrides`, `rightOptionOnly`, `baseFixups`, `excludedBundles` and `deadKeyTimeout`; a key name in\n   `overrides` that is not a QWERTY key position raises an error here\n * Hammerspoon needs the Accessibility permission, and nothing is typed while macOS secure\n   input is on (password fields, some terminals)",
+        "doc": "Starts the key tap and the application watcher; calling it again restarts the layer with the current settings\n\nParameters:\n * None\n\nReturns:\n * The BirmanLayer object\n\nNotes:\n * Reads `overrides`, `rightOptionOnly`, `baseFixups`, `excludedBundles`, `excludedLayouts` and `deadKeyTimeout`; a key name in\n   `overrides` that is not a QWERTY key position raises an error here\n * Hammerspoon needs the Accessibility permission, and nothing is typed while macOS secure\n   input is on (password fields, some terminals)",
         "name": "start",
         "notes": [
-          " * Reads `overrides`, `rightOptionOnly`, `baseFixups`, `excludedBundles` and `deadKeyTimeout`; a key name in",
+          " * Reads `overrides`, `rightOptionOnly`, `baseFixups`, `excludedBundles`, `excludedLayouts` and `deadKeyTimeout`; a key name in",
           "   `overrides` that is not a QWERTY key position raises an error here",
           " * Hammerspoon needs the Accessibility permission, and nothing is typed while macOS secure",
           "   input is on (password fields, some terminals)"
@@ -161,6 +161,22 @@
         "type": "Variable"
       },
       {
+        "def": "BirmanLayer.excludedLayouts",
+        "desc": "List of input source IDs, as `hs.keycodes.currentSourceID()` reports them, in which the layer stays out",
+        "doc": "List of input source IDs, as `hs.keycodes.currentSourceID()` reports them, in which the layer stays out\nand the Option keys keep that layout's own ⌥ layer, e.g. `{ \"com.apple.keylayout.Greek\" }` for Apple's\nGreek tonos letters and symbols. Defaults to `{}`. Read by `BirmanLayer:start()`.",
+        "name": "excludedLayouts",
+        "notes": [],
+        "parameters": [],
+        "returns": [],
+        "signature": "BirmanLayer.excludedLayouts",
+        "stripped_doc": [
+          "List of input source IDs, as `hs.keycodes.currentSourceID()` reports them, in which the layer stays out",
+          "and the Option keys keep that layout's own ⌥ layer, e.g. `{ \"com.apple.keylayout.Greek\" }` for Apple's",
+          "Greek tonos letters and symbols. Defaults to `{}`. Read by `BirmanLayer:start()`."
+        ],
+        "type": "Variable"
+      },
+      {
         "def": "BirmanLayer.deadKeyTimeout",
         "desc": "Seconds a dead key waits for the next key before it is dropped silently. Defaults to `3`.",
         "doc": "Seconds a dead key waits for the next key before it is dropped silently. Defaults to `3`.\nRead by `BirmanLayer:start()`.",
@@ -241,6 +257,22 @@
         "type": "Variable"
       },
       {
+        "def": "BirmanLayer.excludedLayouts",
+        "desc": "List of input source IDs, as `hs.keycodes.currentSourceID()` reports them, in which the layer stays out",
+        "doc": "List of input source IDs, as `hs.keycodes.currentSourceID()` reports them, in which the layer stays out\nand the Option keys keep that layout's own ⌥ layer, e.g. `{ \"com.apple.keylayout.Greek\" }` for Apple's\nGreek tonos letters and symbols. Defaults to `{}`. Read by `BirmanLayer:start()`.",
+        "name": "excludedLayouts",
+        "notes": [],
+        "parameters": [],
+        "returns": [],
+        "signature": "BirmanLayer.excludedLayouts",
+        "stripped_doc": [
+          "List of input source IDs, as `hs.keycodes.currentSourceID()` reports them, in which the layer stays out",
+          "and the Option keys keep that layout's own ⌥ layer, e.g. `{ \"com.apple.keylayout.Greek\" }` for Apple's",
+          "Greek tonos letters and symbols. Defaults to `{}`. Read by `BirmanLayer:start()`."
+        ],
+        "type": "Variable"
+      },
+      {
         "def": "BirmanLayer.logger",
         "desc": "Logger object used within the Spoon. Can be accessed to set the default log level for the",
         "doc": "Logger object used within the Spoon. Can be accessed to set the default log level for the\nmessages coming from the Spoon.",
@@ -311,10 +343,10 @@
       {
         "def": "BirmanLayer:start()",
         "desc": "Starts the key tap and the application watcher; calling it again restarts the layer with the current settings",
-        "doc": "Starts the key tap and the application watcher; calling it again restarts the layer with the current settings\n\nParameters:\n * None\n\nReturns:\n * The BirmanLayer object\n\nNotes:\n * Reads `overrides`, `rightOptionOnly`, `baseFixups`, `excludedBundles` and `deadKeyTimeout`; a key name in\n   `overrides` that is not a QWERTY key position raises an error here\n * Hammerspoon needs the Accessibility permission, and nothing is typed while macOS secure\n   input is on (password fields, some terminals)",
+        "doc": "Starts the key tap and the application watcher; calling it again restarts the layer with the current settings\n\nParameters:\n * None\n\nReturns:\n * The BirmanLayer object\n\nNotes:\n * Reads `overrides`, `rightOptionOnly`, `baseFixups`, `excludedBundles`, `excludedLayouts` and `deadKeyTimeout`; a key name in\n   `overrides` that is not a QWERTY key position raises an error here\n * Hammerspoon needs the Accessibility permission, and nothing is typed while macOS secure\n   input is on (password fields, some terminals)",
         "name": "start",
         "notes": [
-          " * Reads `overrides`, `rightOptionOnly`, `baseFixups`, `excludedBundles` and `deadKeyTimeout`; a key name in",
+          " * Reads `overrides`, `rightOptionOnly`, `baseFixups`, `excludedBundles`, `excludedLayouts` and `deadKeyTimeout`; a key name in",
           "   `overrides` that is not a QWERTY key position raises an error here",
           " * Hammerspoon needs the Accessibility permission, and nothing is typed while macOS secure",
           "   input is on (password fields, some terminals)"

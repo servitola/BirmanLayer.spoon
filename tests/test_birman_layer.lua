@@ -50,7 +50,7 @@ local function typed()
 end
 
 local function restart(configure)
-    L.overrides, L.baseFixups, L.rightOptionOnly = {}, false, true
+    L.overrides, L.baseFixups, L.rightOptionOnly, L.excludedLayouts = {}, false, true, {}
     if configure then configure() end
     L:start(); L:stop()
 end
@@ -280,6 +280,20 @@ source = RUSSIAN_PC
 press(K.q, RALT | LSHIFT); press(K.grave, 0, false, nil, "ё");  eq(typed(), "ӗ", "README: the second ё key composes with the override")
 press(K.q, RALT | LSHIFT); press(K.grave, LSHIFT, false, nil, "Ё"); eq(typed(), "Ӗ", "README: and with Shift")
 source = ABC
+restart()
+
+restart(function() L.excludedLayouts = { GREEK } end)
+source = GREEK
+eq(press(K.c, RALT), false, "excludedLayouts: right ⌥ goes to the layout's own ⌥ layer")
+eq(press(K["/"], RALT | LSHIFT), false, "excludedLayouts: no dead key either"); eq(L:state().dead, nil, "no state armed")
+source = ABC
+press(K["/"], RALT | LSHIFT); eq(L:state().dead and L:state().dead.state, "acute", "other layouts keep the layer")
+source = GREEK
+eq(press(K.a, 0, false, nil, "α"), false, "switching to an excluded layout mid dead key passes the key through")
+eq(L:state().dead, nil, "…and drops the state"); eq(typed(), "", "…without a terminator")
+source = ABC
+restart(function() L.baseFixups = true; L.excludedLayouts = { ABC } end)
+eq(press(K.section, 0), false, "excludedLayouts also switches off that layout's fixups")
 restart()
 
 -- official_cases.json: every press Birman's layouts define.
