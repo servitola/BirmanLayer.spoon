@@ -38,7 +38,8 @@ build — version 3.9 for Mac, `ilya-birman-typolayout-3.9-mac.zip` from
 <https://ilyabirman.ru/typography-layout/>, SHA-256
 `64b4f7b1421cc4275864c25941646ddf2d3075212a77e9ba1c2d27b726afe123` — and nothing else.
 The previous build, 3.8, differs from 3.9 in one ⇧⌥ cell (`t`) and in the Russian cedilla compositions of `с` and `з`. Birman
-publishes no Greek or other layout, and the Spoon invents none; add them with `overrides`.
+publishes no Greek or other layout, and the Spoon invents none. To keep a layout's own ⌥ characters, such as
+Apple Greek's tonos letters, list it in `excludedLayouts`; to add your own, use `overrides`.
 
 `tests/official_cases.json` lists every press Birman's layouts define (about 3 700): each ⌥ and ⇧⌥ key
 in both scripts, and every key pressed inside every dead state. `tests/test_birman_layer.lua` replays all
