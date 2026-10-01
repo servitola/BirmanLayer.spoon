@@ -163,7 +163,7 @@
       {
         "def": "BirmanLayer.excludedLayouts",
         "desc": "List of input source IDs, as `hs.keycodes.currentSourceID()` reports them, in which the layer stays out",
-        "doc": "List of input source IDs, as `hs.keycodes.currentSourceID()` reports them, in which the layer stays out\nand the Option keys keep that layout's own ⌥ layer, e.g. `{ \"com.apple.keylayout.Greek\" }` for Apple's\nGreek tonos letters and symbols. Defaults to `{}`. Read by `BirmanLayer:start()`.",
+        "doc": "List of input source IDs, as `hs.keycodes.currentSourceID()` reports them, in which the layer stays out\nand the Option keys keep that layout's own ⌥ layer, e.g. `{ \"com.apple.keylayout.Greek\" }` for Apple's\nGreek accented letters (with tonos: ά έ ή) and symbols. Defaults to `{}`. Read by `BirmanLayer:start()`.",
         "name": "excludedLayouts",
         "notes": [],
         "parameters": [],
@@ -172,7 +172,7 @@
         "stripped_doc": [
           "List of input source IDs, as `hs.keycodes.currentSourceID()` reports them, in which the layer stays out",
           "and the Option keys keep that layout's own ⌥ layer, e.g. `{ \"com.apple.keylayout.Greek\" }` for Apple's",
-          "Greek tonos letters and symbols. Defaults to `{}`. Read by `BirmanLayer:start()`."
+          "Greek accented letters (with tonos: ά έ ή) and symbols. Defaults to `{}`. Read by `BirmanLayer:start()`."
         ],
         "type": "Variable"
       },
@@ -259,7 +259,7 @@
       {
         "def": "BirmanLayer.excludedLayouts",
         "desc": "List of input source IDs, as `hs.keycodes.currentSourceID()` reports them, in which the layer stays out",
-        "doc": "List of input source IDs, as `hs.keycodes.currentSourceID()` reports them, in which the layer stays out\nand the Option keys keep that layout's own ⌥ layer, e.g. `{ \"com.apple.keylayout.Greek\" }` for Apple's\nGreek tonos letters and symbols. Defaults to `{}`. Read by `BirmanLayer:start()`.",
+        "doc": "List of input source IDs, as `hs.keycodes.currentSourceID()` reports them, in which the layer stays out\nand the Option keys keep that layout's own ⌥ layer, e.g. `{ \"com.apple.keylayout.Greek\" }` for Apple's\nGreek accented letters (with tonos: ά έ ή) and symbols. Defaults to `{}`. Read by `BirmanLayer:start()`.",
         "name": "excludedLayouts",
         "notes": [],
         "parameters": [],
@@ -268,7 +268,7 @@
         "stripped_doc": [
           "List of input source IDs, as `hs.keycodes.currentSourceID()` reports them, in which the layer stays out",
           "and the Option keys keep that layout's own ⌥ layer, e.g. `{ \"com.apple.keylayout.Greek\" }` for Apple's",
-          "Greek tonos letters and symbols. Defaults to `{}`. Read by `BirmanLayer:start()`."
+          "Greek accented letters (with tonos: ά έ ή) and symbols. Defaults to `{}`. Read by `BirmanLayer:start()`."
         ],
         "type": "Variable"
       },

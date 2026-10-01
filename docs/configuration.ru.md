@@ -28,7 +28,7 @@ layer:start()
 | `rightOptionOnly` | `true` | слой только на правом ⌥ (как на Windows); `false`: на обоих ⌥, как в Mac-раскладке Бирмана |
 | `baseFixups` | `false` | печатать символы Бирмана на обычных и Shift-клавишах там, где ABC и Russian – PC от него отличаются (ISO-клавиатуры) |
 | `excludedBundles` | `{}` | bundle ID приложений, где ничего не перехватывается |
-| `excludedLayouts` | `{}` | id источников ввода (`hs.keycodes.currentSourceID()`), где слой не участвует и ⌥ печатает символы самой раскладки: у Apple Greek на ⌥ буквы с тоном (`ά έ ή`) и греческие знаки |
+| `excludedLayouts` | `{}` | id источников ввода (`hs.keycodes.currentSourceID()`), где слой не участвует и ⌥ печатает символы самой раскладки: у Apple Greek на ⇧⌥ буквы с ударением (`ά έ ή`, знак называется тонос), на ⌥ греческие знаки |
 | `deadKeyTimeout` | `3` | сколько секунд ждёт мёртвая клавиша |
 | `logger` | `hs.logger.new("BirmanLayer")` | логгер Spoon |
 

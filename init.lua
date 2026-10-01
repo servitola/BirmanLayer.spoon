@@ -50,7 +50,7 @@ obj.excludedBundles = {}
 --- Variable
 --- List of input source IDs, as `hs.keycodes.currentSourceID()` reports them, in which the layer stays out
 --- and the Option keys keep that layout's own ⌥ layer, e.g. `{ "com.apple.keylayout.Greek" }` for Apple's
---- Greek tonos letters and symbols. Defaults to `{}`. Read by `BirmanLayer:start()`.
+--- Greek accented letters (with tonos: ά έ ή) and symbols. Defaults to `{}`. Read by `BirmanLayer:start()`.
 obj.excludedLayouts = {}
 
 --- BirmanLayer.deadKeyTimeout

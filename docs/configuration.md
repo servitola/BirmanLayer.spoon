@@ -28,7 +28,7 @@ Settings are read by `start()`; call it again after changing one. Methods: `star
 | `rightOptionOnly` | `true` | the layer sits on the right ⌥ only (like Windows); `false`: on both ⌥ keys, as in Birman's Mac layout |
 | `baseFixups` | `false` | type Birman's plain/Shift characters on the few keys where Apple's ABC and Russian – PC differ (ISO keyboards) |
 | `excludedBundles` | `{}` | bundle IDs in which nothing is intercepted |
-| `excludedLayouts` | `{}` | input source IDs (`hs.keycodes.currentSourceID()`) in which the layer stays out, so ⌥ types that layout's own characters: Apple's Greek ⌥ layer has the tonos letters (`ά έ ή`) and Greek symbols |
+| `excludedLayouts` | `{}` | input source IDs (`hs.keycodes.currentSourceID()`) in which the layer stays out, so ⌥ types that layout's own characters: Apple Greek has the accented letters on ⇧⌥ (`ά έ ή`, the accent is called tonos) and Greek symbols on ⌥ |
 | `deadKeyTimeout` | `3` | seconds a dead key waits |
 | `logger` | `hs.logger.new("BirmanLayer")` | Spoon logger |
 
